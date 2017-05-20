@@ -18,7 +18,7 @@ class Downloader {
 }
 class CollectionViewController: UICollectionViewController {
 
-    @IBOutlet weak var loader: UIActivityIndicatorView!
+    @IBOutlet weak var activeLoad: UIActivityIndicatorView!
     let defaultSession = URLSession(configuration: URLSessionConfiguration.default)
     var dataTask: URLSessionDataTask?
     var movies: [Movie] = {
@@ -32,11 +32,6 @@ class CollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         loadMovie(page: p)
         // Do any additional setup after loading the view.
     }
@@ -142,7 +137,14 @@ class CollectionViewController: UICollectionViewController {
         
         dataTask?.resume()
     }
-    
+    //Load thêm dữ liệu
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if !loadingData && indexPath.row == refreshPage - 1 {
+            activeLoad.startAnimating()
+            loadingData = true
+            loadMovie2(page: p)
+        }
+    }
     func loadMovie2(page:Int) {
         if dataTask != nil {
             dataTask?.cancel()
@@ -163,7 +165,6 @@ class CollectionViewController: UICollectionViewController {
                 if httpResponse.statusCode == 200 {
                     do {
                         if let data = data, let response = try JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions(rawValue:0)) as? [String: AnyObject] {
-                            // Lấy các thông tin cần thiết từ mảng results được trang web trả về
                             if let array: AnyObject = response["results"] {
                                 for movieDictonary in array as! [AnyObject] {
                                     if let movieDictonary = movieDictonary as? [String: AnyObject], let title = movieDictonary["title"] as? String {
@@ -178,7 +179,7 @@ class CollectionViewController: UICollectionViewController {
                                 }
                                 self.refreshPage += 20
                                 self.collectionView?.reloadData()
-                                self.loader.stopAnimating()
+                                self.activeLoad.stopAnimating()
                                 self.loadingData = false
                                 self.p += 1
                             } else {
@@ -203,7 +204,7 @@ class CollectionViewController: UICollectionViewController {
         dataTask?.resume()
     }
     // MARK: - Navigation
-    // Chuẩn bị các thông tin cần thiết để điều hướng sang view Movie Detail
+    // Điều hướng sang mà hình detail
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             let cell = sender as! CollectionViewCell

@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Collection View Controller-->
+        <!--MovieDB-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="CollectionViewController" customModule="Tmdb" customModuleProvider="target" sceneMemberID="viewController">
@@ -24,6 +24,10 @@
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
+                        <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="VPO-76-MU0">
+                            <rect key="frame" x="0.0" y="-64" width="375" height="667"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="ocL-CV-qz1" customClass="CollectionViewCell" customModule="Tmdb" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="190"/>
@@ -51,7 +55,10 @@
                             </collectionViewCell>
                         </cells>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="46l-u4-EPe"/>
+                    <navigationItem key="navigationItem" title="MovieDB" id="46l-u4-EPe"/>
+                    <connections>
+                        <outlet property="activeLoad" destination="VPO-76-MU0" id="TjM-bg-2dc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -108,12 +115,6 @@
                                     <constraint firstItem="Daa-N7-ham" firstAttribute="height" secondItem="bdp-Ws-VxA" secondAttribute="height" id="brZ-Qt-5da"/>
                                 </constraints>
                             </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eoE-Kc-92P">
-                                <rect key="frame" x="47" y="36" width="290" height="366"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="366" id="O4E-n0-kzy"/>
-                                </constraints>
-                            </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="DUa-6o-4wg">
                                 <rect key="frame" x="47" y="519" width="280" height="120"/>
                                 <subviews>
@@ -132,10 +133,16 @@
                                     <constraint firstAttribute="trailing" secondItem="Hhh-q4-bQI" secondAttribute="trailing" id="xdk-ca-Jq4"/>
                                 </constraints>
                             </scrollView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eoE-Kc-92P">
+                                <rect key="frame" x="47" y="64" width="290" height="357"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="357" id="O4E-n0-kzy"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="eoE-Kc-92P" firstAttribute="top" secondItem="blo-nO-z3U" secondAttribute="top" constant="36" id="0xX-Z9-iCR"/>
+                            <constraint firstItem="eoE-Kc-92P" firstAttribute="top" secondItem="blo-nO-z3U" secondAttribute="top" constant="64" id="0xX-Z9-iCR"/>
                             <constraint firstItem="DUa-6o-4wg" firstAttribute="top" secondItem="qKy-9x-jJv" secondAttribute="bottom" constant="15" id="48D-cW-hnB"/>
                             <constraint firstItem="DUa-6o-4wg" firstAttribute="leading" secondItem="qKy-9x-jJv" secondAttribute="leading" id="Gjd-0g-aNM"/>
                             <constraint firstItem="qNC-GQ-ijR" firstAttribute="top" secondItem="DUa-6o-4wg" secondAttribute="bottom" constant="28" id="JJ4-Zu-zuJ"/>
@@ -143,10 +150,10 @@
                             <constraint firstItem="DUa-6o-4wg" firstAttribute="centerX" secondItem="blo-nO-z3U" secondAttribute="centerX" id="Tkr-5S-J23"/>
                             <constraint firstItem="eoE-Kc-92P" firstAttribute="trailing" secondItem="dbw-3R-g9e" secondAttribute="trailing" id="Xve-VC-tf8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eoE-Kc-92P" secondAttribute="trailing" constant="22" id="ZKZ-2u-bzd"/>
-                            <constraint firstItem="eoE-Kc-92P" firstAttribute="top" secondItem="dbw-3R-g9e" secondAttribute="bottom" id="gwq-BV-5Qq"/>
+                            <constraint firstItem="eoE-Kc-92P" firstAttribute="top" secondItem="dbw-3R-g9e" secondAttribute="bottom" constant="28" id="gwq-BV-5Qq"/>
                             <constraint firstItem="DUa-6o-4wg" firstAttribute="leading" secondItem="blo-nO-z3U" secondAttribute="leadingMargin" constant="31" id="mMD-J2-fZO"/>
                             <constraint firstItem="DUa-6o-4wg" firstAttribute="leading" secondItem="eoE-Kc-92P" secondAttribute="leading" id="mst-8L-F83"/>
-                            <constraint firstItem="qKy-9x-jJv" firstAttribute="top" secondItem="eoE-Kc-92P" secondAttribute="bottom" constant="27" id="sa0-rb-nsZ"/>
+                            <constraint firstItem="qKy-9x-jJv" firstAttribute="top" secondItem="eoE-Kc-92P" secondAttribute="bottom" constant="8" id="sa0-rb-nsZ"/>
                             <constraint firstItem="DUa-6o-4wg" firstAttribute="centerX" secondItem="dbw-3R-g9e" secondAttribute="centerX" id="wJd-t2-cUL"/>
                         </constraints>
                     </view>
